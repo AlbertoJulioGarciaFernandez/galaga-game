@@ -1,3 +1,5 @@
+import { Player } from "./player.js";
+
 // Notas preliminares importantes:
 // Procurar que el index.html esté lo más limpio posible.
 // Los obstáculos los crearemos desde JS.
@@ -5,8 +7,8 @@
 
 // Extraemos el elemento padre (el tablero "board").
 var board = document.getElementById('main-board');
-// Creamos un nuevo player.
-var player = new Player(225, 750);
+// Creamos un nuevo player y le pasamos tres parámetros.
+var player = new Player(225, 750, board);
 
 player.insertPlayer();
 
@@ -45,5 +47,5 @@ window.addEventListener('keyup', function () {
     // siempre se detendría al reestablecerse su propiedad direction a 
     // cero.
     // Da igual si se pulsa otra tecla distinta de 'a' o 'd'
-    player.'direction' = 0;
-'});'
+    player.direction = 0;
+});

@@ -4,7 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="./index.js" defer></script>
+    <!-- El type=module es un requerimiento para poder usar los import y export de 
+    los ficheros js. De esta manera, podremos seccionar el código en ficheros distintos. -->
+    <!-- Poner 'defer' para que la parte lógica se ejecute DESPUÉS de haberse cargado 
+    el HTML -->
+    <script src="./index.js" type="module" defer></script>
     <link rel="stylesheet" href="./style.css">
     <title>Galaga Game</title>
 </head>
@@ -12,7 +16,7 @@
 <body>
 
     <div id="main-board">
-        
+
     </div>
 
 </body>
