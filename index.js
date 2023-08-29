@@ -12,6 +12,9 @@ var board = document.getElementById('main-board');
 // Creamos un nuevo player y le pasamos tres parámetros.
 var player = new Player(225, 750, board);
 
+// Array que almacenará a todos los enemigos que se generen.
+var enemies = [];
+
 player.insertPlayer();
 
 // Eventos para DESPLAZAR el sprite.
@@ -89,9 +92,10 @@ function createEnemy() {
 
     // Versión arcade
     var xRandom = Math.floor(Math.random() * 10) * 50,
-        enemy = new Enemy(xRandom, 0, board, player);
+        enemy = new Enemy(xRandom, 0, board, player, enemies);
 
     enemy.insertEnemy();
+    enemies.push(enemy);
 
 }
 

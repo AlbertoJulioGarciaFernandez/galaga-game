@@ -1,4 +1,4 @@
-function Enemy(x, y, parent, player) {
+function Enemy(x, y, parent, player, enemies) {
     var self = this;
     this.x = x;
     this.y = y;
@@ -44,6 +44,7 @@ function Enemy(x, y, parent, player) {
         // Asimismo, necesitaríamos detener todos los intervalos que 
         // tienen que ver con él para que deje de ocupar espacio en memoria.
         clearInterval(this.timerId);
+        enemies.shift();
     }
 
     // Cada instancia de enemy ha de tener la referencia del jugador (player)

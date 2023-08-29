@@ -1,7 +1,9 @@
-function Bullet(x, y, parent) {
+function Bullet(x, y, parent, enemies) {
     var self = this;
     this.x = x;
     this.y = y;
+    this.height = 10;
+    this.width = 10;
     this.speed = 50;
     this.sprite;
 
@@ -16,7 +18,7 @@ function Bullet(x, y, parent) {
 
 
     this.move = function () {
-        // self.checkCollision();
+        self.checkCollision();
         // Al tener la referencia la parte superior del tablero, habría que 
         // restar para que las balas fuesen hacia arriba.
         self.y = self.y - self.speed;
@@ -32,6 +34,20 @@ function Bullet(x, y, parent) {
     this.removeBullet = function () {
         parent.removeChild(this.sprite);
         clearInterval(this.timerId);
+    }
+
+    this.checkCollision = function () {
+        enemies.forEach(function (enemy, index) {
+            if (self.y + self.height >= enemy.y &&
+                self.y <= enemy.y + enemy.height &&
+                self.x + self.width >= enemy.x &&
+                self.x <= enemy.x + enemy.width) {
+                self.removeBullet();
+                parent.removeChild(enemy.sprite);
+                enemies.splice(index, 1);
+                
+            }
+        });
     }
 }
 
