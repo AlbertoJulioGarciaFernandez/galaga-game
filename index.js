@@ -1,5 +1,6 @@
 import { Player } from "./player.js";
 import { Enemy } from "./enemy.js";
+import { Bullet } from "./bullet.js";
 
 // Notas preliminares importantes:
 // Procurar que el index.html esté lo más limpio posible.
@@ -26,6 +27,11 @@ window.addEventListener('keydown', function (e) {
         // Desplazamiento hacia la derecha.
         case 'd':
             player.direction = 1;
+            break;
+        // Detectar si se pulsa espacio para disparar.
+        case ' ':
+            var bullet = new Bullet(player.x + 20, player.y - 10, board);
+            bullet.insertBullet();
             break;
     }
 });
