@@ -20,6 +20,11 @@ function Enemy(x, y, parent) {
     this.move = function () {
         self.y = self.y + self.speed;
         self.sprite.style.top = self.y + 'px';
+        // Cada vez que el enemigo se desplaza hacia abajo, se comprueba lo
+        // siguiente:
+        if (self.y > 750) {
+            self.removeEnemy();
+        }
     }
 
     // Definimos un intervalo para ir creando enemigos en pantalla.
@@ -27,6 +32,15 @@ function Enemy(x, y, parent) {
     // se muevan cada uno de los enemigos (cada uno tendra su timerId 
     // concreto).
     this.timerId = setInterval(this.move, 100);
+
+    // Método que hace que un enemigo desaparezca del tablero cuando 
+    // alcance la base (bottom) del tablero.
+    this.removeEnemy = function () {
+        parent.removeChild(this.sprite);
+        // Asimismo, necesitaríamos detener todos los intervalos que 
+        // tienen que ver con él para que deje de ocupar espacio en memoria.
+        clearInterval(this.timerId);
+    }
 
 }
 
