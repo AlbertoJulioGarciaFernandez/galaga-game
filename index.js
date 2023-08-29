@@ -52,8 +52,26 @@ function start() {
     // Esa variable se igualaría al this del propio constructor 
     // (el this del CONTEXTO del constructor).
     // Con la función setInterval se consigue un movimiento MÁS fluido del sprite del DOM.
-    var timerId = setInterval(player.move, 30),
+    var timerId = setInterval(playerMovement, 30),
         timerId2 = setInterval(createEnemy, 2000);
+}
+
+// Función que se encarga de todo lo que tiene que ver con el movimiento del jugador así 
+// como si se ha producido Game Over.
+function playerMovement() {
+    // En caso de que el jugador esté muerto, nos tendría que saltar una alerta.
+    // Es lo primero que se debería comprobar antes de proceder a ejecutar la función move.
+    if (player.isDead) {
+        // gameOver(); Esto sería lo ideal
+        alert('Game Over');
+    }
+
+    player.move();// Desplaza al jugador
+}
+
+// Función para mostrar carátula de Game Over, limpiar el tablero, reiniciar el juego
+function gameOver() {
+    // TODO
 }
 
 // Función que crea enemigos. Se define fuera del setInterval de arriba para que 
@@ -65,7 +83,7 @@ function createEnemy() {
 
     // Versión arcade
     var xRandom = Math.floor(Math.random() * 10) * 50,
-        enemy = new Enemy(xRandom, 0, board);
+        enemy = new Enemy(xRandom, 0, board, player);
 
     enemy.insertEnemy();
 

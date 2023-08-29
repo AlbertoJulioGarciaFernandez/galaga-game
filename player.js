@@ -5,12 +5,15 @@ function Player(x, y, parent) {
     // lógica del elemento "player".
     this.x = x;
     this.y = y;
+    this.height = 50;
+    this.width = 50;
     this.direction = 0; // (0 quieto) (-1 hacia la izquierda) (1 hacia la derecha)
     // El sprite representa al elemento que se insertará en el DOM (en este 
     // caso, el elemento "player").
     this.speed = 5; // Variable que controla la velocidad del elemento "player".
     // Para tener todas las variables en el mismo sitio. Es importante ponerle 
     // un valor múltiplo de cinco para que cuadre.
+    this.isDead = false;
     this.sprite = null; // El sprite sería el elemento que vemos en el DOM.
 
     // Método que genera al player con su correspondiente atributo id con 

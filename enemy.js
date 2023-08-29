@@ -1,7 +1,9 @@
-function Enemy(x, y, parent) {
+function Enemy(x, y, parent, player) {
     var self = this;
     this.x = x;
     this.y = y;
+    this.height = 50;
+    this.width = 50;
     this.speed = 10;
     this.sprite;
 
@@ -18,6 +20,8 @@ function Enemy(x, y, parent) {
     };
 
     this.move = function () {
+        // Antes de mover al enemigo, se procede a detectar si colisiona.
+        self.checkCollision();
         self.y = self.y + self.speed;
         self.sprite.style.top = self.y + 'px';
         // Cada vez que el enemigo se desplaza hacia abajo, se comprueba lo
@@ -41,6 +45,21 @@ function Enemy(x, y, parent) {
         // tienen que ver con él para que deje de ocupar espacio en memoria.
         clearInterval(this.timerId);
     }
+
+    // Cada instancia de enemy ha de tener la referencia del jugador (player)
+    // para detectar colisiones (mucho más sencillo que hacerlo al revés).
+    // Se detecta colisión cuando la parte inferior del enemigo es superior al 
+    // del player y cuando la parte superior del player esté por debajo del enemigo.
+    this.checkCollision = function () {
+        if (this.y + this.height >= player.y &&
+            this.y <= player.y + player.height &&
+            this.x + this.width >= player.x &&
+            this.x <= player.x + player.width) {
+            player.isDead = true;
+
+        }
+    }
+
 
 }
 
