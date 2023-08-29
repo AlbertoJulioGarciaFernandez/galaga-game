@@ -8,46 +8,21 @@ var board = document.getElementById('main-board');
 // Creamos un nuevo player.
 var player = new Player(225, 750);
 
-/* Creamos una función constructora para crear varias estructuras del elemento 
-"player". */
-function Player(x, y) {
-    this.x = x;
-    this.y = y;
-    this.direction = 0; // (0 quieto) (-1 hacia la izquierda) (1 hacia la derecha)
-    // El sprite representa al elemento que se insertará en el DOM (en este 
-    // caso, el elemento "player").
-    this.speed = 10; // Variable que controla la velocidad del elemento "player".
-    // Para tener todas las variables en el mismo sitio.
-    this.sprite = null;
-
-    // Método que genera al player con su correspondiente atributo id con 
-    // valor "player".
-    this.insertPlayer = function () {
-        var newPlayer = document.createElement('div');
-        newPlayer.setAttribute('id', 'player');
-        // Aplicando los estilos CSS al elemento player.
-        /* left: Se le quita la mitad de la anchura del elemento player*/
-        newPlayer.style.left = this.x + 'px';
-        newPlayer.style.top = this.y + 'px';
-        // Guardamos al player en la variable sprite;
-        this.sprite = newPlayer;
-        // Anexión del elemento "sprite" en el tablero.
-        board.appendChild(this.sprite);
-    }
-
-    // Método que desplaza al elemento "player".
-    this.move = function () {
-        this.x = this.x + this.speed * this.direction;
-        // Accedemos a "sprite" que es donde está almacenado el elemento "player" 
-        // del DOM y le aplicamos el estilo.
-        this.sprite.style.left = this.x + 'px';
-    }
-
-}
-
 player.insertPlayer();
 
-// Eventos para desplazamiento.
+// IMPORTANTE:
+// player.move en este caso sería una función callback por lo que el this
+// aquí NO se correspondería con el this del método move() definida en el 
+// constructor de Player. Serían contextos DISTINTOS y cambiaría su significado. 
+// Por eso, se crea una variable "self dentro del constructor" (ver más arriba 
+// en dicho constructor cuando definimos la variable "self" y le asignamos this). 
+// Esa variable se igualaría al this del propio constructor 
+// (el this del CONTEXTO del constructor).
+var timerId = setInterval(player.move, 30) // Con la función setInterval se 
+// consigue un movimiento MÁS fluido del sprite del DOM.
+
+// Eventos para DESPLAZAR el sprite.
+// addEventListener con función anónima
 window.addEventListener('keydown', function (e) {
     // Detectar el botón que se ha pulsado para saber en qué dirección se 
     // desea mover.
@@ -60,13 +35,15 @@ window.addEventListener('keydown', function (e) {
         case 'd':
             player.direction = 1;
             break;
-        default:
-            // En el caso de que se pulse cualquier otra tecla, no se quedará 
-            // almacenado el anterior valor correspondiente a la tecla que se 
-            // pulsase anteriormente (-1 -> a o 1 -> d).
-            player.direction = 0;
-            break;
     }
-
-    player.move();
 });
+
+// Evento para DETENER el sprite.
+// addEventListener con función anónima
+window.addEventListener('keyup', function () {
+    // En este caso, si se pulsase cualquier otra tecla, al levantarla
+    // siempre se detendría al reestablecerse su propiedad direction a 
+    // cero.
+    // Da igual si se pulsa otra tecla distinta de 'a' o 'd'
+    player.'direction' = 0;
+'});'
