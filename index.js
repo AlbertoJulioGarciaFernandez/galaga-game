@@ -1,4 +1,5 @@
 import { Player } from "./player.js";
+import { Enemy } from "./enemy.js";
 
 // Notas preliminares importantes:
 // Procurar que el index.html esté lo más limpio posible.
@@ -7,10 +8,12 @@ import { Player } from "./player.js";
 
 // Extraemos el elemento padre (el tablero "board").
 var board = document.getElementById('main-board');
-// Creamos un nuevo player y le pasamos tres parámetros.
-var player = new Player(225, 750, board);
+// Creamos un nuevo player y enemy, y le pasamos tres parámetros.
+var player = new Player(225, 750, board),
+    enemy1 = new Enemy(50, 0, board);
 
 player.insertPlayer();
+enemy1.insertEnemy();
 
 // IMPORTANTE:
 // player.move en este caso sería una función callback por lo que el this
@@ -20,8 +23,10 @@ player.insertPlayer();
 // en dicho constructor cuando definimos la variable "self" y le asignamos this). 
 // Esa variable se igualaría al this del propio constructor 
 // (el this del CONTEXTO del constructor).
-var timerId = setInterval(player.move, 30) // Con la función setInterval se 
+// var timerId = setInterval(player.move, 30) // Con la función setInterval se 
 // consigue un movimiento MÁS fluido del sprite del DOM.
+
+
 
 // Eventos para DESPLAZAR el sprite.
 // addEventListener con función anónima
