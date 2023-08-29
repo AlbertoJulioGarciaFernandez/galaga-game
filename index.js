@@ -8,25 +8,10 @@ import { Enemy } from "./enemy.js";
 
 // Extraemos el elemento padre (el tablero "board").
 var board = document.getElementById('main-board');
-// Creamos un nuevo player y enemy, y le pasamos tres parámetros.
-var player = new Player(225, 750, board),
-    enemy1 = new Enemy(50, 0, board);
+// Creamos un nuevo player y le pasamos tres parámetros.
+var player = new Player(225, 750, board);
 
 player.insertPlayer();
-enemy1.insertEnemy();
-
-// IMPORTANTE:
-// player.move en este caso sería una función callback por lo que el this
-// aquí NO se correspondería con el this del método move() definida en el 
-// constructor de Player. Serían contextos DISTINTOS y cambiaría su significado. 
-// Por eso, se crea una variable "self dentro del constructor" (ver más arriba 
-// en dicho constructor cuando definimos la variable "self" y le asignamos this). 
-// Esa variable se igualaría al this del propio constructor 
-// (el this del CONTEXTO del constructor).
-// var timerId = setInterval(player.move, 30) // Con la función setInterval se 
-// consigue un movimiento MÁS fluido del sprite del DOM.
-
-
 
 // Eventos para DESPLAZAR el sprite.
 // addEventListener con función anónima
@@ -54,3 +39,36 @@ window.addEventListener('keyup', function () {
     // Da igual si se pulsa otra tecla distinta de 'a' o 'd'
     player.direction = 0;
 });
+
+// Función que inicia el juego. Aquí iría todo lo que queremos que ocurra 
+// al inicio del juego.
+function start() {
+    // IMPORTANTE:
+    // player.move en este caso sería una función callback por lo que el this
+    // aquí NO se correspondería con el this del método move() definida en el 
+    // constructor de Player. Serían contextos DISTINTOS y cambiaría su significado. 
+    // Por eso, se crea una variable "self dentro del constructor" (ver más arriba 
+    // en dicho constructor cuando definimos la variable "self" y le asignamos this). 
+    // Esa variable se igualaría al this del propio constructor 
+    // (el this del CONTEXTO del constructor).
+    // Con la función setInterval se consigue un movimiento MÁS fluido del sprite del DOM.
+    var timerId = setInterval(player.move, 30),
+        timerId2 = setInterval(createEnemy, 2000);
+}
+
+// Función que crea enemigos. Se define fuera del setInterval de arriba para que 
+// la función start() quede más limpia y clara.
+function createEnemy() {
+    // Obtención de un número aleatorio entre 0 y 450 para el posicionamiento
+    // de los enemigos. Versión aleatoria.
+    // var xRandom = Math.floor(Math.random() * 450);
+
+    // Versión arcade
+    var xRandom = Math.floor(Math.random() * 10) * 50,
+        enemy = new Enemy(xRandom, 0, board);
+
+    enemy.insertEnemy();
+
+}
+
+start(); // Invocación del método que inicia el juego.
